@@ -6,8 +6,8 @@ import android.support.annotation.Nullable;
 import android.view.Menu;
 import android.view.View;
 
-import com.tbruyelle.rxpermissions.RxPermissions;
-import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
+import com.tbruyelle.rxpermissions2.RxPermissions;
+import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 
 import butterknife.Unbinder;
 import cn.droidlover.xdroidmvp.XDroidConf;
@@ -34,6 +34,8 @@ public abstract class XActivity<P extends IPresent> extends RxAppCompatActivity 
         super.onCreate(savedInstanceState);
         context = this;
 
+        getP();
+
         if (getLayoutId() > 0) {
             setContentView(getLayoutId());
             bindUI(null);
@@ -58,7 +60,9 @@ public abstract class XActivity<P extends IPresent> extends RxAppCompatActivity 
     protected P getP() {
         if (p == null) {
             p = newP();
-            if (p != null) {
+        }
+        if (p != null) {
+            if (!p.hasV()) {
                 p.attachV(this);
             }
         }

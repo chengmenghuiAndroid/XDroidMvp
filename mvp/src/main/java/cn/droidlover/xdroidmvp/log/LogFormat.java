@@ -15,6 +15,8 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
+import cn.droidlover.xdroidmvp.kit.Kits;
+
 /**
  * Created by wanglei on 2016/11/29.
  */
@@ -55,6 +57,7 @@ public class LogFormat {
                 formatted = ja.toString(JSON_INDENT);
             }
         } catch (Exception e) {
+            e.printStackTrace();
         }
 
         return formatted;
@@ -76,7 +79,7 @@ public class LogFormat {
             formatted = xmlOutput.getWriter().toString().replaceFirst(">", ">"
                     + XPrinter.lineSeparator);
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
         return formatted;
     }
@@ -102,9 +105,11 @@ public class LogFormat {
 
 
     public static String formatArgs(String format, Object... args) {
-        if (format != null) {
-            return String.format(format, args);
-        } else {
+        try {
+            if (!Kits.Empty.check(format)) {
+                return String.format(format, args);
+            }
+
             StringBuilder sb = new StringBuilder();
             for (int i = 0, N = args.length; i < N; i++) {
                 if (i != 0) {
@@ -113,7 +118,10 @@ public class LogFormat {
                 sb.append(args[i]);
             }
             return sb.toString();
+
+        } catch (Exception e) {
         }
+        return "";
     }
 
     public static String formatBorder(String[] segments) {

@@ -8,8 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.tbruyelle.rxpermissions.RxPermissions;
-import com.trello.rxlifecycle.components.support.RxFragment;
+import com.tbruyelle.rxpermissions2.RxPermissions;
+import com.trello.rxlifecycle2.components.support.RxFragment;
 
 import butterknife.Unbinder;
 import cn.droidlover.xdroidmvp.XDroidConf;
@@ -54,6 +54,8 @@ public abstract class XFragment<P extends IPresent> extends RxFragment implement
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        getP();
+
         if (useEventBus()) {
             BusProvider.getBus().register(this);
         }
@@ -76,7 +78,9 @@ public abstract class XFragment<P extends IPresent> extends RxFragment implement
     protected P getP() {
         if (p == null) {
             p = newP();
-            if (p != null) {
+        }
+        if (p != null) {
+            if (!p.hasV()) {
                 p.attachV(this);
             }
         }

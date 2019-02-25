@@ -33,12 +33,15 @@ public interface ILoader {
 
     void pause(Context context);
 
+    void loadCircle(String url, ImageView target, Options options);
+
+    void loadCorner(String url, ImageView target, int radius, Options options);
 
     class Options {
 
         public int loadingResId = RES_NONE;        //加载中的资源id
         public int loadErrorResId = RES_NONE;      //加载失败的资源id
-        public ImageView.ScaleType scaleType = null;
+        public ImageView.ScaleType scaleType = ImageView.ScaleType.CENTER_CROP;
 
         public static final int RES_NONE = -1;
 

@@ -3,7 +3,7 @@ package cn.droidlover.xdroidmvp.mvp;
 import android.os.Bundle;
 import android.view.View;
 
-import com.tbruyelle.rxpermissions.RxPermissions;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import butterknife.Unbinder;
 import cn.droidlover.xdroidmvp.XDroidConf;
@@ -26,6 +26,9 @@ public abstract class XLazyFragment<P extends IPresent>
     @Override
     protected void onCreateViewLazy(Bundle savedInstanceState) {
         super.onCreateViewLazy(savedInstanceState);
+
+        getP();
+
         if (getLayoutId() > 0) {
             setContentView(getLayoutId());
             bindUI(getRealRootView());
@@ -58,7 +61,9 @@ public abstract class XLazyFragment<P extends IPresent>
     protected P getP() {
         if (p == null) {
             p = newP();
-            if (p != null) {
+        }
+        if (p != null) {
+            if (!p.hasV()) {
                 p.attachV(this);
             }
         }
